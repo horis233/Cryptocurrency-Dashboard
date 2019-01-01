@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import WelcomeMessage from './WelcomeMessage';
 import styled, {css} from 'styled-components';
+import AppLayout from './AppLayout';
 
 const MyButton = styled.div`
     color: green;
