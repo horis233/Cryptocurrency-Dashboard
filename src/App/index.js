@@ -20,11 +20,9 @@ const TomatoButton = styled(MyButton)`
 class App extends Component {
     render() {
         return ( 
-            <div><WelcomeMessage/>
-                <MyButton>Hello</MyButton>
-                <MyButton primary>Hello</MyButton>
-                <TomatoButton primary>Hello</TomatoButton>
-            </div>
+            <AppLayout>
+                <WelcomeMessage/>
+            </AppLayout>
         ); 
     }
 }
