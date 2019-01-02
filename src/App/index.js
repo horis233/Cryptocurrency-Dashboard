@@ -13,10 +13,10 @@ const MyButton = styled.div`
     `}
 `
 
-const TomatoButton = styled(MyButton)`
-    color: tomato;
-    board-color: tomato;
-`;
+// const TomatoButton = styled(MyButton)`
+//     color: tomato;
+//     board-color: tomato;
+// `;
 
 
 class App extends Component {
