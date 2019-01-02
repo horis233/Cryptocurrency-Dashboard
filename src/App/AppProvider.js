@@ -11,6 +11,24 @@ export class AppProvider extends React.Component {
         }
     }
 
+    confirmFavorites = () => {
+        this.setState({
+            firstVisit: false,
+            page: 'dashboard'
+        });
+        localStorage.setItem('crytoDash', JSON.stringify({
+            test: 'hello'
+        }));
+    }
+
+    savedSetting(){
+        let crytoDashData = JSON.parse(localStorage.getItem.getItem('crytoData'));
+        if(!crytoDashData){
+            return {page: 'settings', firstVisit: true}
+        }
+        return {};
+    }
+
     setPage = page => this.setState({page})
 
     render(){

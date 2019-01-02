@@ -6,12 +6,12 @@ import AppLayout from './AppLayout';
 import AppBar from './AppBar';
 import {AppProvider} from './AppProvider';
 
-const MyButton = styled.div`
-    color: green;
-    ${props => props.primary && css`
-        color: palevioletred;
-    `}
-`
+// const MyButton = styled.div`
+//     color: green;
+//     ${props => props.primary && css`
+//         color: palevioletred;
+//     `}
+// `
 
 // const TomatoButton = styled(MyButton)`
 //     color: tomato;
