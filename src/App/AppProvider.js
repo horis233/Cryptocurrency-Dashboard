@@ -14,6 +14,7 @@ export class AppProvider extends React.Component {
     confirmFavorites = () => {
         this.setState({
             firstVisit: false,
+            ...this.savedSetting(),
             page: 'dashboard'
         });
         localStorage.setItem('crytoDash', JSON.stringify({
