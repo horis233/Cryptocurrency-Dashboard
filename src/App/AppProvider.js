@@ -7,14 +7,15 @@ export class AppProvider extends React.Component {
         super(props);
         this.state = {
             page: 'dashboard',
-            setPage: this.setPage
+            ...this.savedSetting(),
+            setPage: this.setPage,
+            confirmFavorites: this.confirmFavorites
         }
     }
 
     confirmFavorites = () => {
         this.setState({
             firstVisit: false,
-            ...this.savedSetting(),
             page: 'dashboard'
         });
         localStorage.setItem('crytoDash', JSON.stringify({
@@ -23,7 +24,7 @@ export class AppProvider extends React.Component {
     }
 
     savedSetting(){
-        let crytoDashData = JSON.parse(localStorage.getItem.getItem('crytoData'));
+        let crytoDashData = JSON.parse(localStorage.getItem('crytoData'));
         if(!crytoDashData){
             return {page: 'settings', firstVisit: true}
         }
