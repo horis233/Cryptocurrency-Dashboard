@@ -9,12 +9,12 @@ const Logo = styled.div`
 const Bar = styled.div`
     display: grid;
     margin-bottom: 40px;
-    grid-template-columns: 180px auto 100px 100px;
+    grid-template-columns: 180px auto 120px 120px;
 `
 const ControlButtonElem = styled.div`
     cursor: pointer;
     ${props => props.active && css`
-        text-shadow: 0px 0px 60px #03ff03;
+        text-shadow: 0px 0px 60px #FF6347;
     `}
 `
 
@@ -40,7 +40,7 @@ export default function(){
     return <Bar>
         <div> Cryptocurrency Dashboard</div>
         <div/>
-        <div> Dashboard</div>
-        <div> Settings </div>
+        <ControlButton name="dashboard"/>
+        <ControlButton name="settings"/>
     </Bar>
 }

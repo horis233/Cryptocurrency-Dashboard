@@ -23,8 +23,10 @@ class App extends Component {
     render() {
         return ( 
             <AppLayout>
-                <AppBar/>
-                <WelcomeMessage/>
+                <AppProvider>
+                    <AppBar/>
+                    <WelcomeMessage/>
+                </AppProvider>
             </AppLayout>
         ); 
     }

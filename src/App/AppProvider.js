@@ -3,10 +3,11 @@ import React from 'react';
 export const AppContext = React.createContext();
 
 export class AppProvider extends React.Component {
-    constructor(prop){
+    constructor(props){
         super(props);
         this.state = {
-            page: 'dashboard'
+            page: 'dashboard',
+            setPage: this.setPage
         }
     }
 
