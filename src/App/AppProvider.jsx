@@ -8,25 +8,26 @@ export class AppProvider extends React.Component {
     super(props);
     this.state = {
       page: 'dashboard',
-      ...this.savedSetting(),
+      ...this.savedSettings(),
       setPage: this.setPage,
       confirmFavorites: this.confirmFavorites,
     };
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     this.fetchCoins();
   }
 
   setPage = page => this.setState({page});
 
 
-  async fetchCoins() {
+  fetchCoins = async() => {
     const coinList = (await cc.coinList()).Data;
+    console.log(coinList);
     this.setState(coinList);
   }
 
-  confirmFavorites() {
+  confirmFavorites = () => {
     this.setState({
       firstVisit: false,
       page: 'dashboard',
@@ -36,7 +37,7 @@ export class AppProvider extends React.Component {
     }));
   }
 
-  savedSetting() {
+  savedSettings = () => {
     let crytoDashData = JSON.parse(localStorage.getItem('crytoData'));
     if (!crytoDashData) {
       return { page: 'settings', firstVisit: true };
