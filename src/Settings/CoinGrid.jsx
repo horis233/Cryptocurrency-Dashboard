@@ -19,7 +19,7 @@ export default function (){
     return <AppContext.Consumer>
         {(coinList) => <CoinGridStyled>
             {Object.keys(coinList).map(coinKey =>
-                <div key = {coinKey} > {coinKey} </div>    
+                <Tile key = {coinKey} > {coinKey} </Tile>    
             )}
         </CoinGridStyled>}
     </AppContext.Consumer>
