@@ -8,9 +8,9 @@ export const CoinGridStyled = styled.div`
 `
 export default function (){  
     return <AppContext.Consumer>
-        {({coinList}) => <CoinGridStyled>
+        {(coinList) => <CoinGridStyled>
             {Object.keys(coinList).map(coinKey =>
-                <div> {coinKey} </div>    
+                <div key = {coinKey} > {coinKey} </div>    
             )}
         </CoinGridStyled>}
     </AppContext.Consumer>

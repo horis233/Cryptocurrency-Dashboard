@@ -9,7 +9,7 @@ export default function () {
     <Page name="settings">
       <WelcomeMessage />
       <ConfirmButton />
-      {/* <CoinGrid /> */}
+      <CoinGrid />
     </Page>
   );
 }
