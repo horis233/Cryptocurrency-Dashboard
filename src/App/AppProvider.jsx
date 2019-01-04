@@ -1,6 +1,5 @@
 import React from 'react';
 import cc from 'cryptocompare';
-import PropTypes from 'prop-types';
 
 export const AppContext = React.createContext();
 
@@ -19,9 +18,8 @@ export class AppProvider extends React.Component {
     this.fetchCoins();
   }
 
-  setPage(page) {
-    return this.setState({ page });
-  }
+  setPage = page => this.setState({page});
+
 
   async fetchCoins() {
     const coinList = (await cc.coinList()).Data;

@@ -6,18 +6,6 @@ import { AppProvider } from './AppProvider';
 import Settings from '../Settings/index';
 import Content from '../Shared/Content';
 
-// const MyButton = styled.div`
-//     color: green;
-//     ${props => props.primary && css`
-//         color: palevioletred;
-//     `}
-// `
-
-// const TomatoButton = styled(MyButton)`
-//     color: tomato;
-//     board-color: tomato;
-// `;
-
 
 class App extends Component {
   render() {
