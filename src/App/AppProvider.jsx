@@ -37,7 +37,7 @@ export class AppProvider extends React.Component {
   }
 
   savedSetting() {
-    const crytoDashData = JSON.parse(localStorage.getItem('crytoData'));
+    let crytoDashData = JSON.parse(localStorage.getItem('crytoData'));
     if (!crytoDashData) {
       return { page: 'settings', firstVisit: true };
     }
@@ -46,10 +46,8 @@ export class AppProvider extends React.Component {
 
 
   render() {
-    return (
-      <AppContext.Provider value={this.state}>
-        {this.props.children}
-      </AppContext.Provider>
-    );
+    return <AppContext.Provider value={this.state}>
+      {this.props.children}
+    </AppContext.Provider>;
   }
 }
