@@ -1,8 +1,10 @@
 import styled from 'styled-components';
-import {subtleBoxShadow, lightBlueBackground, greenBoxShadow} from './Styles';
+import { subtleBoxShadow, lightBlueBackground } from './Styles';
 
-export const Tile = styled.div`
+const Tile = styled.div`
     ${subtleBoxShadow}
     ${lightBlueBackground}
     padding: 10px;
-`
+`;
+
+export { Tile as default };
