@@ -5,8 +5,8 @@ import {SelectableTile} from '../Shared/Tile';
 export default function(coinKey){
     return <AppContext.Consumer>
         {(coinList) => {
-            const coin = coinList[coinKey.coinKey];
-            // console.log(coin);
+            const coin = coinList.coinList[coinKey.coinKey];
+            console.log(coin);
             return <SelectableTile>
                 <div>{coin.Name}</div>
             </SelectableTile>

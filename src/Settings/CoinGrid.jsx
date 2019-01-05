@@ -18,12 +18,21 @@ function getCoinsToDisplay(coinList) {
 export default function (){  
     return (
         <AppContext.Consumer>
-          {(coinList) =>
-            <CoinGridStyled >
-              {getCoinsToDisplay(coinList).map(coinKey => (
-                <CoinTile key = {coinKey} coinKey={coinKey}/>
-              ))}
+          {(coinList) => {
+            console.log(coinList.coinList);
+            if(coinList.coinList){
+              let coinMap = new Map();
+              for(let k of Object.keys(coinList.coinList)){
+              coinMap.set(k, coinList.coinList[k]);
+            }
+            return <CoinGridStyled>
+            {Object.keys(coinList.coinList).map(coinKey => (
+            <CoinTile key = {coinKey} coinKey={coinKey}/>
+            ))}
             </CoinGridStyled>
+            }
+            
+            }
           }
         </AppContext.Consumer>
     )
