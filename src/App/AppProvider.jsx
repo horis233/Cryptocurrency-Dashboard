@@ -23,8 +23,10 @@ export class AppProvider extends React.Component {
 
   fetchCoins = async() => {
     const coinList = (await cc.coinList()).Data;
-    console.log(coinList);
-    this.setState(coinList);
+    //console.log(coinList);
+    this.setState(
+      coinList
+    );
   }
 
   confirmFavorites = () => {
@@ -47,6 +49,7 @@ export class AppProvider extends React.Component {
 
 
   render() {
+    // console.log(this.props.children);
     return <AppContext.Provider value={this.state}>
       {this.props.children}
     </AppContext.Provider>;
