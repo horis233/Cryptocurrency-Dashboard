@@ -26,7 +26,7 @@ export default function (){
               coinMap.set(k, coinList.coinList[k]);
             }
             return <CoinGridStyled>
-            {Object.keys(coinList.coinList).map(coinKey => (
+            {Object.keys(coinList.coinList).slice(0, 20).map(coinKey => (
             <CoinTile key = {coinKey} coinKey={coinKey}/>
             ))}
             </CoinGridStyled>
