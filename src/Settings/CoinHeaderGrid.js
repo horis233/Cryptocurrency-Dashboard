@@ -22,7 +22,7 @@ const DeleteIcon = styled.div`
 `
 
 export default function({name, symbol, topSection}){
-    console.log(topSection);
+    // console.log(topSection);
     return  (
 		<CoinHeaderGridStyled>
 			<div> {name}</div>
