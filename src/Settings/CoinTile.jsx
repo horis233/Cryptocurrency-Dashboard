@@ -23,6 +23,8 @@ export default function({coinKey, topSection}){
             let TileClass = SelectableTile;
             if(topSection) {
                 TileClass = DeletableTile;
+            }else if(isInFavorites(coinKey)){
+                TileClass = DisabledTile;
             }
             return <TileClass onClick={clickCoinHandler(topSection, coinKey, addCoin, removeCoin)}>
                 <CoinHeaderGrid topSection={topSection} name={coin.Name} symbol={coin.Symbol}/>

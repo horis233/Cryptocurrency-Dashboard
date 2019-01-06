@@ -1,5 +1,6 @@
 import React from 'react';
 import cc from 'cryptocompare';
+import _ from 'lodash';
 
 const MAX_FAVORITES = 10
 
@@ -12,6 +13,7 @@ export class AppProvider extends React.Component {
       page: 'dashboard',
       favorites: ['ETH', 'BTC', 'XMR', 'DOGE'],
       addCoin: this.addCoin,
+      removeCoin: this.removeCoin,
       isInFavorites: this.isInFavorites,
       confirmFavorites: this.confirmFavorites,
       ...this.savedSettings(),
@@ -56,6 +58,11 @@ export class AppProvider extends React.Component {
       this.setState({favorites});
     }
   };
+  
+  removeCoin = key => {
+    let favorites = [...this.state.favorites];
+    this.setState({favorites: _.pull(favorites, key)});
+  };
 
   fetchCoins = async() => {
     const coinList = (await cc.coinList()).Data;
@@ -64,23 +71,30 @@ export class AppProvider extends React.Component {
   }
 
   confirmFavorites = () => {
-    this.setState({
-      firstVisit: false,
-      page: 'dashboard',
-    });
-    localStorage.setItem('crytoDash', JSON.stringify({
-      test: 'hello',
-    }));
-  }
+    let currentFavorite = this.state.favorites[0];
+    this.setState(
+      {
+        firstVisit: false,
+        page: 'dashboard',
+      }
+    );
+    localStorage.setItem(
+      'cryptoDash',
+      JSON.stringify({
+        favorites: this.state.favorites,
+      })
+    );
+  };
 
   savedSettings = () => {
     let crytoDashData = JSON.parse(localStorage.getItem('crytoData'));
     if (!crytoDashData) {
       return { page: 'settings', firstVisit: true };
     }
-    return {};
+    return {crytoDashData};
   }
 
+  isInFavorites = key => _.includes(this.state.favorites, key);
 
   render() {
     // console.log(this.props.children);
