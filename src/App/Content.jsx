@@ -1,15 +1,18 @@
-import React from "react";
-import { AppContext } from "./AppProvider";
+import React from 'react';
+import { AppContext } from './AppProvider';
 
 export default function(props) {
-  return (
-    <AppContext.Consumer>
-      {coinList => {
-        if (!coinList) {
-          return <div> Loading Coins </div>;
-        }
-        return <div> {props.children}</div>;
-      }}
-    </AppContext.Consumer>
-  );
+	return (
+		<AppContext.Consumer>
+			{({ coinList, prices, firstVisit }) => {
+				if (!coinList) {
+					return <div> Loading Coins </div>;
+				}
+				if (!firstVisit && !prices) {
+					return <div> Loading Prices</div>;
+				}
+				return <div> {props.children}</div>;
+			}}
+		</AppContext.Consumer>
+	);
 }
