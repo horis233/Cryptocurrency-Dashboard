@@ -1,8 +1,8 @@
-import React from 'react';
-import cc from 'cryptocompare';
-import _ from 'lodash';
+import React from "react";
+import cc from "cryptocompare";
+import _ from "lodash";
 
-const MAX_FAVORITES = 10
+const MAX_FAVORITES = 10;
 
 export const AppContext = React.createContext();
 
@@ -10,8 +10,8 @@ export class AppProvider extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      page: 'dashboard',
-      favorites: ['ETH', 'BTC', 'XMR', 'DOGE'],
+      page: "dashboard",
+      favorites: ["ETH", "BTC", "XMR", "DOGE"],
       addCoin: this.addCoin,
       removeCoin: this.removeCoin,
       isInFavorites: this.isInFavorites,
@@ -24,18 +24,18 @@ export class AppProvider extends React.Component {
 
   componentDidMount = () => {
     this.fetchCoins();
-  }
+  };
 
-  setPage = page => this.setState({page});
+  setPage = page => this.setState({ page });
 
-  setFilteredCoins = (filteredCoins) => this.setState({filteredCoins});
+  setFilteredCoins = filteredCoins => this.setState({ filteredCoins });
 
   confirmFavorites = () => {
     let currentFavorite = this.state.favorites[0];
     this.setState(
       {
         firstVisit: false,
-        page: 'dashboard',
+        page: "dashboard",
         prices: null,
         currentFavorite,
         historical: null
@@ -46,7 +46,7 @@ export class AppProvider extends React.Component {
       }
     );
     localStorage.setItem(
-      'cryptoDash',
+      "cryptoDash",
       JSON.stringify({
         favorites: this.state.favorites,
         currentFavorite
@@ -58,51 +58,51 @@ export class AppProvider extends React.Component {
     let favorites = [...this.state.favorites];
     if (favorites.length < MAX_FAVORITES) {
       favorites.push(key);
-      this.setState({favorites});
+      this.setState({ favorites });
     }
   };
-  
+
   removeCoin = key => {
     let favorites = [...this.state.favorites];
-    this.setState({favorites: _.pull(favorites, key)});
+    this.setState({ favorites: _.pull(favorites, key) });
   };
 
-  fetchCoins = async() => {
+  fetchCoins = async () => {
     const coinList = (await cc.coinList()).Data;
     //console.log(coinList);
-    this.setState({coinList: coinList});
-  }
+    this.setState({ coinList: coinList });
+  };
 
   confirmFavorites = () => {
     let currentFavorite = this.state.favorites[0];
-    this.setState(
-      {
-        firstVisit: false,
-        page: 'dashboard',
-      }
-    );
+    this.setState({
+      firstVisit: false,
+      page: "dashboard"
+    });
     localStorage.setItem(
-      'cryptoDash',
+      "cryptoDash",
       JSON.stringify({
-        favorites: this.state.favorites,
+        favorites: this.state.favorites
       })
     );
   };
 
   savedSettings = () => {
-    let crytoDashData = JSON.parse(localStorage.getItem('crytoData'));
+    let crytoDashData = JSON.parse(localStorage.getItem("crytoData"));
     if (!crytoDashData) {
-      return { page: 'settings', firstVisit: true };
+      return { page: "settings", firstVisit: true };
     }
-    return {crytoDashData};
-  }
+    return { crytoDashData };
+  };
 
   isInFavorites = key => _.includes(this.state.favorites, key);
 
   render() {
     // console.log(this.props.children);
-    return <AppContext.Provider value={this.state}>
-      {this.props.children}
-    </AppContext.Provider>;
+    return (
+      <AppContext.Provider value={this.state}>
+        {this.props.children}
+      </AppContext.Provider>
+    );
   }
 }

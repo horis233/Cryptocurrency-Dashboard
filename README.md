@@ -3,6 +3,7 @@
 [Online demo](http://cryptodash.cronnection.at/)
 
 ## Overview
+
 Training project using:
 
 - create-react-app
@@ -14,13 +15,11 @@ Training project using:
 - styled-components
 - cryptocompare
 
-
 ## Functionality
 
 - 2 main pages:
   - dashboard: check the data of your favorite coins
   - Settings: add & remove coins to your favorites list
-
 
 ## TODO
 
