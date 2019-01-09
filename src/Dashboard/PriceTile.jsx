@@ -34,7 +34,7 @@ const PriceTileStyled = styled(SelectableTile)`
 const PriceTileCompactStyled = styled(PriceTileStyled)`
 	${fontSize3}
 	display: grid;
-	grid-gap: 5px;
+	grid-gap: 10px;
 	grid-template-columns: repeat(3, 1fr);
 	justify-items: right;
 `;
