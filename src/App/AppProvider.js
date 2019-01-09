@@ -18,6 +18,7 @@ export class AppProvider extends React.Component {
             confirmFavorites: this.confirmFavorites,
             ...this.savedSettings(),
             setPage: this.setPage,
+            setCurrentFavorite: this.setCurrentFavorite,
             setFilteredCoins: this.setFilteredCoins
         };
     }
@@ -36,6 +37,22 @@ export class AppProvider extends React.Component {
         this.setState({
             filteredCoins
         });
+
+    setCurrentFavorite = (sym) => {
+        this.setState({
+                currentFavorite: sym,
+                historical: null
+            },
+            this.fetchHistorical
+        );
+        localStorage.setItem(
+            'cryptoDash',
+            JSON.stringify({
+                ...JSON.parse(localStorage.getItem('cryptoDash')),
+                currentFavorite: sym
+            })
+        );
+    };
 
     confirmFavorites = () => {
         const currentFavorite = this.state.favorites[0];
@@ -108,31 +125,63 @@ export class AppProvider extends React.Component {
     confirmFavorites = () => {
         const currentFavorite = this.state.favorites[0];
         this.setState({
-            firstVisit: false,
-            page: "dashboard"
-        });
+                firstVisit: false,
+                page: 'dashboard',
+                prices: null,
+                currentFavorite,
+                // historical: null
+            },
+            () => {
+                this.fetchPrices();
+                // this.fetchHistorical();
+            }
+        );
         localStorage.setItem(
-            "cryptoDash",
+            'cryptoDash',
             JSON.stringify({
-                favorites: this.state.favorites
+                favorites: this.state.favorites,
+                currentFavorite
             })
         );
     };
 
-    savedSettings = () => {
-        const crytoDashData = JSON.parse(localStorage.getItem("crytoData"));
-        if (!crytoDashData) {
+    isInFavorites = key => _.includes(this.state.favorites, key);
+
+
+    savedSettings() {
+        let cryptoDashData = JSON.parse(localStorage.getItem('cryptoDash'));
+        if (!cryptoDashData) {
             return {
-                page: "settings",
-                firstVisit: true
+                firstVisit: true,
+                page: 'settings'
             };
         }
+        let {
+            favorites,
+            currentFavorite
+        } = cryptoDashData;
         return {
-            crytoDashData
+            favorites,
+            currentFavorite
         };
+    }
+
+    setCurrentFavorite = (sym) => {
+        this.setState({
+                currentFavorite: sym,
+                historical: null
+            },
+            this.fetchHistorical
+        );
+        localStorage.setItem(
+            'cryptoDash',
+            JSON.stringify({
+                ...JSON.parse(localStorage.getItem('cryptoDash')),
+                currentFavorite: sym
+            })
+        );
     };
 
-    isInFavorites = key => _.includes(this.state.favorites, key);
 
     render() {
         // console.log(this.props.children);
@@ -140,11 +189,7 @@ export class AppProvider extends React.Component {
             AppContext.Provider value = {
                 this.state
             } > {
-                " "
-            } {
                 this.props.children
-            } {
-                " "
             } <
             /AppContext.Provider>
         );
