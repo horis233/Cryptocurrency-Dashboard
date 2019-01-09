@@ -38,17 +38,15 @@ export class AppProvider extends React.Component {
         });
 
     confirmFavorites = () => {
-        let currentFavorite = this.state.favorites[0];
+        const currentFavorite = this.state.favorites[0];
         this.setState({
                 firstVisit: false,
                 page: "dashboard",
                 prices: null,
                 currentFavorite,
-                historical: null
             },
             () => {
                 this.fetchPrices();
-                this.fetchHistorical();
             }
         );
         localStorage.setItem(
@@ -71,7 +69,7 @@ export class AppProvider extends React.Component {
     };
 
     removeCoin = key => {
-        let favorites = [...this.state.favorites];
+        const favorites = [...this.state.favorites];
         this.setState({
             favorites: _.pull(favorites, key)
         });
@@ -79,15 +77,15 @@ export class AppProvider extends React.Component {
 
     fetchCoins = async() => {
         const coinList = (await cc.coinList()).Data;
-        //console.log(coinList);
+        // console.log(coinList);
         this.setState({
-            coinList: coinList
+            coinList
         });
     };
 
     fetchPrices = async() => {
-        if (this.state.firstVisit) return;
-        let prices = await this.prices();
+        // if (this.state.firstVisit) return;
+        const prices = await this.prices();
         this.setState({
             prices
         });
@@ -97,17 +95,18 @@ export class AppProvider extends React.Component {
         let returnData = [];
         for (let i = 0; i < this.state.favorites.length; i++) {
             try {
-                let priceData = await cc.priceFull(this.state.favorites[i], "USD");
+                console.log(this.state.favorites[i]);
+                let priceData = await cc.priceFull(this.state.favorites[i], 'USD');
                 returnData.push(priceData);
             } catch (e) {
-                console.warn("Fetch price error: ", e);
+                console.warn('Fetch price error: ', e);
             }
         }
         return returnData;
     };
 
     confirmFavorites = () => {
-        let currentFavorite = this.state.favorites[0];
+        const currentFavorite = this.state.favorites[0];
         this.setState({
             firstVisit: false,
             page: "dashboard"
@@ -121,7 +120,7 @@ export class AppProvider extends React.Component {
     };
 
     savedSettings = () => {
-        let crytoDashData = JSON.parse(localStorage.getItem("crytoData"));
+        const crytoDashData = JSON.parse(localStorage.getItem("crytoData"));
         if (!crytoDashData) {
             return {
                 page: "settings",
