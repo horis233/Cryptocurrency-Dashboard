@@ -1,3 +1,5 @@
+/* eslint react/no-unused-state: 0 */
+
 import React from 'react';
 import './App.css';
 import _ from 'lodash';
@@ -49,8 +51,9 @@ export class AppProvider extends React.Component {
 	};
 
 	validateFavorites = coinList => {
+		const { favorites } = this.state;
 		const validatedFavorites = [];
-		this.state.favorites.forEach(favorite => {
+		favorites.forEach(favorite => {
 			if (coinList[favorite]) {
 				validatedFavorites.push(favorite);
 			}
@@ -84,7 +87,8 @@ export class AppProvider extends React.Component {
 	};
 
 	fetchPrices = async () => {
-		if (this.state.firstVisit) return;
+		const { firstVisit } = this.state;
+		if (firstVisit) return;
 		const prices = await this.prices();
 		this.setState({
 			prices
@@ -92,15 +96,16 @@ export class AppProvider extends React.Component {
 	};
 
 	fetchHistorical = async () => {
-		if (this.state.firstVisit) return;
+		const { currentFavorite, timeInterval, firstVisit } = this.state;
+		if (firstVisit) return;
 		const results = await this.historical();
 		const historical = [
 			{
-				name: this.state.currentFavorite,
+				name: currentFavorite,
 				data: results.map((ticker, index) => [
 					moment()
 						.subtract({
-							[this.state.timeInterval]: TIME_UNITS - index
+							[timeInterval]: TIME_UNITS - index
 						})
 						.valueOf(),
 					ticker.USD
@@ -114,14 +119,15 @@ export class AppProvider extends React.Component {
 
 	historical = () => {
 		const promises = [];
+		const { currentFavorite, timeInterval } = this.state;
 		for (let units = TIME_UNITS; units > 0; units--) {
 			promises.push(
 				cc.priceHistorical(
-					this.state.currentFavorite,
+					currentFavorite,
 					['USD'],
 					moment()
 						.subtract({
-							[this.state.timeInterval]: units
+							[timeInterval]: units
 						})
 						.toDate()
 				)
@@ -131,16 +137,17 @@ export class AppProvider extends React.Component {
 	};
 
 	prices = async () => {
+		const { favorites } = this.state;
 		const returnData = [];
-		for (let i = 0; i < this.state.favorites.length; i++) {
+		for (let i = 0; i < favorites.length; i++) {
 			try {
-				const priceData = await cc.priceFull(this.state.favorites[i], 'USD');
-				returnData.push(priceData);
+				returnData.push(cc.priceFull(favorites[i], 'USD'));
 			} catch (e) {
 				console.warn('Fetch price error: ', e);
 			}
 		}
-		return returnData;
+		const result = await Promise.all(returnData);
+		return result;
 	};
 
 	setPage = page =>
@@ -149,7 +156,8 @@ export class AppProvider extends React.Component {
 		});
 
 	confirmFavorites = () => {
-		const currentFavorite = this.state.favorites[0];
+		const { favorites } = this.state;
+		const currentFavorite = favorites[0];
 		this.setState(
 			{
 				firstVisit: false,
@@ -166,30 +174,33 @@ export class AppProvider extends React.Component {
 		localStorage.setItem(
 			'cryptoDash',
 			JSON.stringify({
-				favorites: this.state.favorites,
+				favorites,
 				currentFavorite
 			})
 		);
 	};
 
 	addCoin = key => {
-		const favorites = [...this.state.favorites];
-		if (favorites.length < MAX_FAVORITES) {
-			favorites.push(key);
-			this.setState({
-				favorites
-			});
+		const { favorites } = this.state;
+		const addedFavorites = [...favorites];
+		if (addedFavorites.length < MAX_FAVORITES) {
+			addedFavorites.push(key);
+			this.setState({ favorites: addedFavorites });
 		}
 	};
 
 	removeCoin = key => {
-		const favorites = [...this.state.favorites];
+		const { favorites } = this.state;
+		const deletedFavorites = [...favorites];
 		this.setState({
-			favorites: _.pull(favorites, key)
+			favorites: _.pull(deletedFavorites, key)
 		});
 	};
 
-	isInFavorites = key => _.includes(this.state.favorites, key);
+	isInFavorites = key => {
+		const { favorites } = this.state;
+		return _.includes(favorites, key);
+	};
 
 	setFilteredCoins = filteredCoins =>
 		this.setState({
@@ -212,6 +223,7 @@ export class AppProvider extends React.Component {
 	};
 
 	render() {
-		return <AppContext.Provider value={this.state}> {this.props.children} </AppContext.Provider>;
+		const { children } = this.props;
+		return <AppContext.Provider value={this.state}> {children} </AppContext.Provider>;
 	}
 }

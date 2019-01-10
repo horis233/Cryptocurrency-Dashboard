@@ -5,9 +5,10 @@
         "node": true,
         "jest": true
     },
-    "extends": ["prettier", "prettier/react"],
+    "extends": ["airbnb", "prettier", "prettier/react"],
     "parser": "babel-eslint",
     "parserOptions": {
+        "ecmaVersion": 7,
         "ecmaFeatures": {
             "jsx": true
         },
@@ -34,6 +35,13 @@
         "react/prop-types": 0,
         "options": {
             "fix": true
-        }
+        },
+        "no-plusplus": [2, {
+            "allowForLoopAfterthoughts": true
+        }],
+        "no-param-reassign": ["error", {
+            "props": false
+        }],
+        "no-console": "off"
     }
 }
