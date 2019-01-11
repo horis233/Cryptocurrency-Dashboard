@@ -9,7 +9,7 @@ Training project using:
 - create-react-app
 - Bitfinex API
 - React
-- Redux
+- React Context
 - moment
 - react-highcharts
 - styled-components
@@ -20,8 +20,3 @@ Training project using:
 - 2 main pages:
   - dashboard: check the data of your favorite coins
   - Settings: add & remove coins to your favorites list
-
-## TODO
-
-- Add comments
-- Clean code
